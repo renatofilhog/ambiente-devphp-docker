@@ -29,11 +29,6 @@ RUN docker-php-ext-install -j$(nproc) \
     ctype \
     fileinfo \
     xml
-# Extensões com erro:
-    # tokenizer 
-    # openssl 
-    # json 
-    # mbstring 
     
 
 #Configuração xdebug

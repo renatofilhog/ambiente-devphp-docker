@@ -5,12 +5,12 @@ services:
     image: nginx
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./public:/usr/share/nginx/html
+      - ./public:/var/www/html
     ports:
-      - "8080:80"
+      - "80:80"
     environment:
       - NGINX_HOST=localhost
-      - NGINX_PORT=8080
+      - NGINX_PORT=80
     depends_on:
       - php
 
@@ -21,6 +21,6 @@ services:
     volumes:
       - ./public:/var/www/html
     environment:
-      - XDEBUG_PORT=9005
+      - XDEBUG_PORT=9003
       - XDEBUG_HOST=host.docker.internal2
     command: php-fpm --nodaemonize
