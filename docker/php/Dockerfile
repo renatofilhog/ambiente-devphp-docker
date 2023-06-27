@@ -1,27 +1,4 @@
-FROM php:8.2-fpm
-
-
-# RUN apt-get update && apt-get install -y \
-#     libbz2-dev \
-#     libicu-dev \
-#     libfreetype6-dev \
-#     libjpeg62-turbo-dev \
-#     libpng-dev \
-#     libssl-dev \
-#     libxml2-dev \
-#     zlib1g-dev
-
-# # Instalação das extensões do PHP
-# RUN docker-php-ext-install -j$(nproc) \
-#     pdo_mysql \
-#     bcmath \
-#     ctype \
-#     fileinfo \
-#     json \
-# mbstring
-#     openssl \
-#     tokenizer \
-#     xml
+FROM php:8.1-fpm
 
 #Instalaçao XDEBUG
 RUN pecl install xdebug && docker-php-ext-enable xdebug
@@ -36,9 +13,28 @@ RUN wget https://getcomposer.org/installer -O composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && rm composer-setup.php
 
-#Extensões PHP
-RUN docker-php-ext-install pdo_mysql \
-    json
+# # Dependências PHP
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+        libxml2-dev libxslt1-dev python-dev-is-python3 \
+        curl unzip zip libzip-dev \
+        libmcrypt-dev libreadline-dev
+
+# # Instalação das extensões do PHP
+RUN docker-php-ext-install -j$(nproc) \
+    pdo_mysql \
+    bcmath  \
+    ctype \
+    fileinfo \
+    xml
+# Extensões com erro:
+    # tokenizer 
+    # openssl 
+    # json 
+    # mbstring 
+    
 
 #Configuração xdebug
 RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
