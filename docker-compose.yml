@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  web:
+    image: nginx
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./public:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./public:/var/www/html
+    environment:
+      - XDEBUG_PORT=9003
+      - XDEBUG_HOST=host.docker.internal
