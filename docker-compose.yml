@@ -26,15 +26,13 @@ services:
       - XDEBUG_PORT=9003
       - XDEBUG_HOST=host.docker.internal2
     command: php-fpm --nodaemonize
-  
+
   db:
     image: mysql
     container_name: db-mysql-dev
     restart: 'no'
     ports:
       - "3306:3306"
-    volumes:
-      - ./mysql/data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=toor
       - MYSQL_USER=user
