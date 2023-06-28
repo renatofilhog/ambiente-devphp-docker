@@ -1,4 +1,4 @@
-# Ambiente de Desenvolvimento PHP+Docker
+# Ambiente de Desenvolvimento PHP + MySql em container docker
 
 A base de um ambiente de desenvolvimento usando containers, sendo estes bem enxutos e sem muitas extensões, caso necessário será preciso adicionar.
 
@@ -28,4 +28,4 @@ Siga a documentação para instalção do docker: https://docs.docker.com/get-do
 - nginx
 - php:8.2-FPM
 - PHP XDebuug
-
+- MySql
