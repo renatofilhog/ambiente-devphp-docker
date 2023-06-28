@@ -2,16 +2,16 @@ version: "3.9"
 
 services:
   web:
-    image: nginx
+    image: nginx:1.25.1
     container_name: webserver-nginx
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./public:/var/www/html
     ports:
-      - "80:80"
+      - "${APP_PORT}:${NGINX_PORT}"
     environment:
-      - NGINX_HOST=localhost
-      - NGINX_PORT=80
+      - NGINX_HOST=${NGINX_HOST}
+      - NGINX_PORT=${NGINX_PORT}
     depends_on:
       - php
 
@@ -23,21 +23,22 @@ services:
     volumes:
       - ./public:/var/www/html
     environment:
-      - XDEBUG_PORT=9003
-      - XDEBUG_HOST=host.docker.internal2
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      - XDEBUG_PORT=${XDEBUG_PORT}
+      - XDEBUG_HOST=${XDEBUG_HOST}
     command: php-fpm --nodaemonize
 
   db:
-    image: mysql
+    image: mysql:8.0
     container_name: db-mysql-dev
     restart: 'no'
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=toor
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=pass
-      - MYSQL_DATABASE=sail
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
 
 networks:
   webnetwork:
